@@ -1,0 +1,13 @@
+# spell-checker: ignore fileignoreconfig tfvars
+---
+fileignoreconfig:
+- filename: env/emes/common.tfvars
+  checksum: cf2a75ae116ffd028f99858908ced71e166dee10caae8c387e6a9e8abded3a93
+- filename: gcp-l4/service.tf
+  checksum: debd3b1885c7f800b12efc1cd2af46f414a563694aa067d1a3d2a616e3028622
+- filename: service/main.tf
+  checksum: 9a7695b6ca3a9e8184244502a83352094c8bcbf5dff4e1ac3d785cf8df34f8fd
+- filename: gcp-l4/variables.tf
+  checksum: 155e1b7929151adaac817f0998510e178b358230c98259e94d7d0008c77d996b
+- filename: service/variables.tf
+  checksum: 3973230cdd03299974a054ed588296f90437cb9b6450865e5e1d84c133cf3608

@@ -1,0 +1,42 @@
+# Pre-commit configuration
+# spell-checker: ignore repos yamllint talismanrc autofix scanwithrc
+---
+repos:
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.25.0
+    hooks:
+      - id: yamllint
+        files: \.(yml|yaml|talismanrc)$
+        # cloud-init file *must* begin with ##template or #cloud-config so do
+        # not include in strict check
+        exclude: cloud_config\.yaml$
+        types: [file, yaml]
+        entry: yamllint --strict
+      - id: yamllint
+        name: yamllint-cloud-config
+        files: cloud_config\.yaml$
+        entry: yamllint
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.45.0
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_docs
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.3.0
+    hooks:
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-xml
+      - id: check-yaml
+        args: [--allow-multiple-documents]
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: pretty-format-json
+        args: [--autofix]
+      - id: sort-simple-yaml
+      - id: trailing-whitespace
+  - repo: https://github.com/thoughtworks/talisman
+    rev: scanwithrc
+    hooks:
+      - id: talisman-commit

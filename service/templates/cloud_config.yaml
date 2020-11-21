@@ -1,0 +1,59 @@
+## template: jinja
+#cloud-config
+# spell-checker: ignore yamllint fullchain sbin runcmd
+# yamllint disable rule:line-length
+---
+write_files:
+  - path: /etc/tls.cert.pem
+    permissions: 0640
+    encoding: gz+b64
+    owner: root
+    content: |
+      ${tls_fullchain_cert}
+  - path: /etc/tls.key.pem
+    permissions: 0640
+    encoding: gz+b64
+    owner: root
+    content: |
+      ${tls_key}
+  - path: /usr/local/sbin/setup.sh
+    permissions: 0750
+    owner: root
+    content: |
+      #!/bin/sh
+      apt update
+      apt install -y nginx
+      systemctl daemon-reload
+      systemctl restart nginx
+  - path: /etc/nginx/sites-enabled/default
+    permissions: 0644
+    owner: root
+    content: |
+      server {
+        listen 80;
+        listen 443 ssl;
+        server_name ${server_name};
+        ssl_certificate /etc/tls.cert.pem;
+        ssl_certificate_key /etc/tls.key.pem;
+        root /var/www/html;
+        index index.html;
+        location / {
+          sub_filter '!!REMOTE!!' $remote_addr;
+          sub_filter_once on;
+          try_files $uri $uri/ =404;
+        }
+      }
+  - path: /var/www/html/index.html
+    permissions: 0644
+    owner: root
+    content: |
+      <html>
+        <head>
+          <title>Webapp</title>
+        </head>
+        <body>
+          <h1>This webapp is running on {{ v1.local_hostname }}. Remote address is !!REMOTE!!.</h1>
+        </body>
+      </html>
+runcmd:
+  - /usr/local/sbin/setup.sh
