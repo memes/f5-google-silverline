@@ -11,3 +11,7 @@ fileignoreconfig:
   checksum: 155e1b7929151adaac817f0998510e178b358230c98259e94d7d0008c77d996b
 - filename: service/variables.tf
   checksum: 3973230cdd03299974a054ed588296f90437cb9b6450865e5e1d84c133cf3608
+- filename: service/README.md
+  checksum: dffa6d7d325554fd0cd0466a1aab3b05fcac35c7ca6e611efe3882b69bd377cd
+- filename: gcp-nlb/README.md
+  checksum: 1e2a42cf2b9fcde10414984cd4ff8ce980412f64f5de45d255834a35eaa8b016
